@@ -1,0 +1,43 @@
+from scapy.all import 
+
+# Function to process captured packets
+def packet_callback(packet)
+    if packet.haslayer(IP)
+        src_ip = packet[IP].src
+        dst_ip = packet[IP].dst
+        protocol = packet[IP].proto
+
+        # Print basic packet information
+        print(fPacket {src_ip} - {dst_ip}  Protocol {protocol})
+
+        # If the packet has a TCP layer, print TCP info and payload
+        if packet.haslayer(TCP)
+            src_port = packet[TCP].sport
+            dst_port = packet[TCP].dport
+            print(f   TCP {src_ip}{src_port} - {dst_ip}{dst_port})
+
+            # Print payload data (first 20 bytes)
+            if packet.haslayer(Raw)
+                payload = packet[Raw].load
+                print(f   Payload {payload[20]})
+
+        # If the packet has a UDP layer, print UDP info and payload
+        elif packet.haslayer(UDP)
+            src_port = packet[UDP].sport
+            dst_port = packet[UDP].dport
+            print(f   UDP {src_ip}{src_port} - {dst_ip}{dst_port})
+
+            # Print payload data (first 20 bytes)
+            if packet.haslayer(Raw)
+                payload = packet[Raw].load
+                print(f   Payload {payload[20]})
+
+# Main function to start the packet sniffer
+def main()
+    print(Packet Sniffer started...)
+
+    # Start sniffing packets and invoke packet_callback for each captured packet
+    sniff(prn=packet_callback, store=0)
+
+if __name__ == __main__
+    main()
